@@ -1,0 +1,16 @@
+GET stats about todos
+---
+tags:
+  - Todos
+
+parameters:
+  - in: header
+    name: Authorization
+    required: true
+
+responses:
+  200:
+    description: Todos stats
+
+  401:
+    description: Fails to get items due to authentication error
