@@ -21,10 +21,9 @@ def get_todo(id):
 
     return jsonify({
         'id': todo.id,
-        'url': todo.url,
-        'short_url': todo.short_url,
-        'visit': todo.visits,
-        'body': todo.body,
+        'title': todo.title,
+        'is_complete': todo.is_complete,
+        'user': todo.user,
         'created_at': todo.created_at,
         'updated_at': todo.updated_at,
     }), HTTP_200_OK
