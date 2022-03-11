@@ -49,7 +49,7 @@ def delete_todo(id):
 @todos.put('/<int:id>')
 @todos.patch('/<int:id>')
 @jwt_required()
-def edittodo(id):
+def edit_todo(id):
     current_user = get_jwt_identity()
 
     todo = Todo.query.filter_by(user_id=current_user, id=id).first()
@@ -57,25 +57,18 @@ def edittodo(id):
     if not todo:
         return jsonify({'message': 'Item not found'}), HTTP_404_NOT_FOUND
 
-    body = request.get_json().get('body', '')
-    url = request.get_json().get('url', '')
+    title = request.get_json().get('title', '')
+    is_complete = request.get_json().get('is_complete', '')
 
-    if not validators.url(url):
-        return jsonify({
-            'error': 'Enter a valid url'
-        }), HTTP_400_BAD_REQUEST
-
-    todo.url = url
-    todo.body = body
+    todo.title = title
+    todo.is_complete = is_complete
 
     db.session.commit()
 
     return jsonify({
         'id': todo.id,
-        'url': todo.url,
-        'short_url': todo.short_url,
-        'visit': todo.visits,
-        'body': todo.body,
+        'title': todo.title,
+        'is_complete': todo.is_complete,
         'created_at': todo.created_at,
         'updated_at': todo.updated_at,
     }), HTTP_200_OK
@@ -86,7 +79,6 @@ def edittodo(id):
 @swag_from("./docs/todos.yaml")
 def todo_list():
     current_user = get_jwt_identity()
-    print('2------',current_user)
 
     data = []
 
@@ -109,7 +101,6 @@ def todo_list():
 @jwt_required()
 def create_todo():
     current_user = get_jwt_identity()
-    print('3------',current_user)
     
     title = request.get_json().get('title', '')
 
