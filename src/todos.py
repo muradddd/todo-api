@@ -23,7 +23,6 @@ def get_todo(id):
         'id': todo.id,
         'title': todo.title,
         'is_complete': todo.is_complete,
-        'user': todo.user,
         'created_at': todo.created_at,
         'updated_at': todo.updated_at,
     }), HTTP_200_OK
