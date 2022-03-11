@@ -1,4 +1,5 @@
 from os import access
+from datetime import timedelta
 from src.constants.http_status_codes import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED, HTTP_409_CONFLICT
 from flask import Blueprint, app, request, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -63,7 +64,7 @@ def login():
 
         if is_pass_correct:
             refresh = create_refresh_token(identity=user.id)
-            access = create_access_token(identity=user.id)
+            access = create_access_token(identity=user.id, expires_delta=timedelta(days=5))
 
             return jsonify({
                 'user': {
