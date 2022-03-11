@@ -47,7 +47,6 @@ def delete_todo(id):
 
 
 @todos.put('/<int:id>')
-@todos.patch('/<int:id>')
 @jwt_required()
 def edit_todo(id):
     current_user = get_jwt_identity()
